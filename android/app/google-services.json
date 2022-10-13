@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "726620912876",
+    "project_id": "pubby-for-f5cde",
+    "storage_bucket": "pubby-for-f5cde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726620912876:android:086fb62109c0a9b230b9c9",
+        "android_client_info": {
+          "package_name": "com.pubbyforyoutube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726620912876-3semveq4f25k105020n8c41lo8b32od9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIsYLqO6STXYw_DP5rWZpdc3mV7mZQjgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726620912876-3semveq4f25k105020n8c41lo8b32od9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
