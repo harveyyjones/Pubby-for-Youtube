@@ -22,8 +22,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(text: "omergencbtf@gmail.com");
+  final passwordController = TextEditingController(text: "1234567");
   bool isVisible = false;
   // late FirebaseAuth auth;
 

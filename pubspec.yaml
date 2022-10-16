@@ -43,8 +43,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_staggered_grid_view: ^0.6.2
   avatar_view: ^1.0.1
-  country_icons: ^2.0.2
   syncfusion_flutter_calendar: ^20.3.48
+  youtube_api: ^1.0.4
+  firebase_core: ^1.24.0
+  lottie: ^1.4.2
+  flutter_svg: ^1.1.5
+  month_year_picker: ^0.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -76,3 +80,7 @@ flutter:
     - family: Cambria
       fonts:
         - asset: fonts/Cambria.ttf
+
+    - family: Javanese
+      fonts:
+        - asset: fonts/javatext.ttf

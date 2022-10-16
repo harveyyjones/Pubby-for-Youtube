@@ -52,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                     child: Container(
                       width: size.width.w * 0.8,
                       height: screenlHeight / 1.9,

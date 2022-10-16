@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
+import 'package:pubby_for_youtube/UI/own_profile_screen.dart';
+import 'package:pubby_for_youtube/UI/steppers.dart';
 
 import '../UI/home_screen.dart';
 import '../UI/notifications_screen.dart';
@@ -18,9 +18,9 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   var _index = 0;
   List _pagesToNavigateTo = [
-    HomeScreen(),
+    MyStatefulWidget(), // HomeScreen(),
     NotificationsScreen(),
-    NotificationsScreen(),
+    OwnProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

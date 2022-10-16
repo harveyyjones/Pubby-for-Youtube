@@ -64,7 +64,7 @@ class _PersonalInfoNameBarState extends State<PersonalInfoNameBar> {
           ),
         ),
         SizedBox(
-          height: 40,
+          height: widget.label == "What's your name?" ? 10 : 40,
         )
       ],
     );
