@@ -37,6 +37,7 @@ dependencies:
   
   flutter_screenutil: ^5.5.4
   firebase_auth: ^3.10.0
+  
   google_fonts: ^3.0.1
   font_awesome_flutter: ^10.2.1
   cool_alert: ^1.1.0
@@ -49,6 +50,10 @@ dependencies:
   lottie: ^1.4.2
   flutter_svg: ^1.1.5
   month_year_picker: ^0.2.0+3
+  image_picker: ^0.8.6
+  event_bus: ^2.0.0
+  image_cropper: ^3.0.0
+  firebase_storage: ^10.3.11
 
 dev_dependencies:
   flutter_test:

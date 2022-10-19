@@ -40,6 +40,7 @@ class _PersonalInfoNameBarState extends State<PersonalInfoNameBar> {
             child: Padding(
               padding: EdgeInsets.only(left: 40.w, right: 15.w),
               child: TextFormField(
+                  controller: widget.controller,
                   keyboardType: widget.label == "Price"
                       ? TextInputType.numberWithOptions()
                       : null,

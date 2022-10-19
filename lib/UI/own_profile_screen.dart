@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
+import 'package:pubby_for_youtube/UI/Messages/message_box_screen.dart';
 import 'package:pubby_for_youtube/UI/profile_settings_screen.dart';
 import 'package:pubby_for_youtube/main.dart';
 
@@ -86,7 +87,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
               ),
               InkWell(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MyApp(),
+                  builder: (context) => MessageScreen(),
                 )),
                 child: Container(
                   decoration: BoxDecoration(

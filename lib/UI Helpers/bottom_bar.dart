@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
+import 'package:pubby_for_youtube/UI/Messages/message_box_screen.dart';
 import 'package:pubby_for_youtube/UI/own_profile_screen.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
 
@@ -21,12 +22,14 @@ class _BottomBarState extends State<BottomBar> {
     MyStatefulWidget(), // HomeScreen(),
     NotificationsScreen(),
     OwnProfileScreen(),
+    MessageScreen()
   ];
   @override
   Widget build(BuildContext context) {
     return Container(
       height: screenlHeight / 14,
       child: BottomNavigationBar(
+          selectedItemColor: Colors.blue,
           selectedFontSize: 0,
           currentIndex: widget.selectedIndex,
           onTap: (value) {
@@ -71,6 +74,17 @@ class _BottomBarState extends State<BottomBar> {
                 icon: Icon(
                   size: 50,
                   Icons.person,
+                  color: Colors.black,
+                )),
+            BottomNavigationBarItem(
+                activeIcon: Icon(
+                  Icons.message,
+                  size: 60,
+                ),
+                label: "Profile",
+                icon: Icon(
+                  size: 50,
+                  Icons.message,
                   color: Colors.black,
                 )),
           ]),

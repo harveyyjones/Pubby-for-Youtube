@@ -1,7 +1,6 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/register_screen.dart';
@@ -29,13 +28,10 @@ class _LandingScreenState extends State<LandingScreen> {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            // color: Colors.black,
-            child: LottieBuilder.asset(
-              "assetss/fire.json",
-              width: screenWidth / 1.5,
-              height: screenlHeight / 3,
-            ),
+          child: LottieBuilder.asset(
+            "assetss/fire.json",
+            width: screenWidth / 1.5,
+            height: screenlHeight / 3,
           ),
         ),
         SizedBox(
@@ -63,7 +59,7 @@ class _LandingScreenState extends State<LandingScreen> {
         ),
         Text(
           "or",
-          style: TextStyle(fontFamily: "Javanese", fontSize: 38),
+          style: TextStyle(fontFamily: "Javanese", fontSize: 38.sp),
         ),
         LoginAndSignupButton(text: "Register", direction: RegisterPage())
       ]),
