@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
+import 'package:pubby_for_youtube/UI/steppers.dart';
 
 import '../UI Helpers/personal_info_name_bar.dart';
 
@@ -16,40 +22,64 @@ TextEditingController eMailController =
     TextEditingController(text: "haileyelse@gmail.com");
 
 class _ProfileSettingsState extends State<ProfileSettings> {
+  File? _image;
   var _selectedItem = "Intermediate";
   @override
   Widget build(BuildContext context) {
+    Future<File?> cropImage(File imageFile) async {
+      CroppedFile? croppedImage = await ImageCropper().cropImage(
+          aspectRatioPresets: [CropAspectRatioPreset.square],
+          sourcePath: imageFile.path);
+      print("Image File Path: ${imageFile.path}");
+      return File(croppedImage!.path);
+    }
+
+    Future pickImage(ImageSource source) async {
+      try {
+        final image = await ImagePicker().pickImage(source: source);
+        if (image == null) return;
+        File? img = File(image.path);
+        img = (await cropImage(img));
+        setState(() {
+          _image = img;
+        });
+      } on PlatformException catch (e) {
+        print(e.message);
+      }
+    }
+
     return Scaffold(
       body: Container(
-          padding: EdgeInsets.only(top: screenlHeight / 20),
+          padding: EdgeInsets.only(top: screenHeight / 20),
           decoration: const BoxDecoration(color: Color(0xffeef3f8)),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
-                height: screenlHeight / 10,
+                height: screenHeight / 10,
               ),
               Stack(
                 children: [
                   Container(
                     color: Color.fromARGB(0, 176, 11, 11),
                     width: screenWidth / 2,
-                    child: const Hero(
+                    child: Hero(
                       tag: "Profile Screen",
                       child: CircleAvatar(
                           maxRadius: 180,
                           minRadius: 55,
                           backgroundImage:
-                              AssetImage("assetss/teacherman.jpg")),
+                              _image != null ? FileImage(_image!) : null),
                     ),
                   ),
                   Positioned(
                       right: screenWidth / 25,
-                      top: screenlHeight / 5,
+                      top: screenHeight / 5,
                       child: IconButton(
                           iconSize: 75,
                           onPressed: () {
-                            //TODO: Image picker ile foto değiştirilebiliyor olacak. Muhtemelen localde saklanabilir. Aşağıda dil seviyeleri belirleme kısmı var onlarında lokalde tutulması lazım.
+                            pickImage(ImageSource.gallery);
+                            //TODO: Image picker ile foto değiştirilebiliyor olacak. Muhtemelen localde saklanabilir.
                           },
                           icon: Icon(
                               color: Color.fromARGB(255, 160, 201, 245),
@@ -57,7 +87,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 ],
               ),
               SizedBox(
-                height: screenlHeight / 33,
+                height: screenHeight / 33,
                 width: MediaQuery.of(context).size.width,
               ),
               PersonalInfoNameBar(

@@ -24,13 +24,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
           Container(
             width: screenWidth - 30,
-            height: screenlHeight /
+            height: screenHeight /
                 (13 /
                     12), // Bu şekilde ondalık sayı yerine kesirli sayı kullanmanız sayıların değerlerini orantılı olarak yükselterek hassas ölçümler yapmanızı sağlar.
             //  color: Colors.black,
             child: ListView.separated(
               separatorBuilder: (context, index) => SizedBox(
-                height: screenlHeight / 45,
+                height: screenHeight / 45,
               ),
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
@@ -39,7 +39,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         children: [
                           SizedBox(
                             width: double.infinity,
-                            height: screenlHeight / 15,
+                            height: screenHeight / 15,
                           ),
                           Text(
                             "Eşleşmelerin!",
@@ -49,7 +49,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                 fontWeight: FontWeight.w300),
                           ),
                           SizedBox(
-                            height: screenlHeight / 22,
+                            height: screenHeight / 22,
                           ),
                         ],
                       )
@@ -83,7 +83,7 @@ class _CardsFornyificationsState extends State<CardsForNotifications> {
         ),
       ], borderRadius: BorderRadius.circular(22), color: Colors.white),
       width: screenWidth / 1.1,
-      height: screenlHeight / 7,
+      height: screenHeight / 7,
       child: Row(
         children: [
           SizedBox(
@@ -100,11 +100,11 @@ class _CardsFornyificationsState extends State<CardsForNotifications> {
           Column(
             children: [
               SizedBox(
-                height: screenlHeight / 55,
+                height: screenHeight / 55,
               ),
               Container(
                 width: screenWidth / 1.6,
-                height: screenlHeight / 10,
+                height: screenHeight / 10,
                 color: Colors.white,
                 child: const Text(
                   softWrap: true,

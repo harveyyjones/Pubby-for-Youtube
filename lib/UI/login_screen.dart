@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pubby_for_youtube/UI/profile_settings_screen.dart';
 import 'package:pubby_for_youtube/UI/register_screen.dart';
 
 import '../UI Helpers/blur_screen_maker.dart';
@@ -21,11 +23,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final User? user = FirebaseAuth.instance.currentUser;
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController(text: "omergencbtf@gmail.com");
-  final passwordController = TextEditingController(text: "1234567");
+  final emailController = TextEditingController(text: "omer@gmail.com");
+  final passwordController = TextEditingController(text: "1234567890");
+
   bool isVisible = false;
-  // late FirebaseAuth auth;
+  late FirebaseAuth auth;
+
+  @override
+  void initState() {
+    auth = FirebaseAuth.instance;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -58,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: BlueScreenMaker(
                               xAxis: 15.0,
                               yAxis: 15.0,
-                              height: screenlHeight / 1.7,
+                              height: screenHeight / 1.7,
                               width: screenWidth / 1.2,
                               child: _buildForm(context),
                             )),
@@ -91,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.black54,
                 )),
             SizedBox(
-              height: screenlHeight / 20,
+              height: screenHeight / 20,
             ),
             _buildEmailField(),
             SizedBox(
@@ -295,17 +305,41 @@ class _LoginPageState extends State<LoginPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(32),
           ),
-          minimumSize: const Size(double.infinity, 50)),
+          minimumSize: Size(double.infinity, 50)),
       onPressed: () async {
-        if (true) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomeScreen(),
-              ),
-              (route) => false);
-        } else {
-          callSnackbar("Giriş Başarısız");
+        var user = await auth.signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+
+        print("isim: ${this.user!.displayName}");
+        print("e mail : ${this.user!.email}");
+        print("uid ${this.user!.uid}");
+
+        try {
+          // Geçici olarak bloke ettim. Over request hatası alıyordum yoksa.
+          if (await auth.signInWithEmailAndPassword(
+                  email: emailController.text,
+                  password: passwordController.text) !=
+              null
+              ) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+                (route) => false);
+          }
+        } on FirebaseAuthException catch (e) {
+          print(e.code);
+          switch (e.code) {
+            case "wrong-password":
+              return callSnackbar("Wrong password.");
+
+            case "user-not-found":
+              return callSnackbar("Wrong E Mail");
+            case "too-many-requests":
+              return callSnackbar("Please try a few seconds later");
+            default:
+          }
         }
       },
       child: Text("Sign In",

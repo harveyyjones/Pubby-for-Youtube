@@ -24,18 +24,18 @@ class _LandingScreenState extends State<LandingScreen> {
           ),
       child: Column(children: [
         SizedBox(
-          height: screenlHeight / 19,
+          height: screenHeight / 19,
         ),
         Align(
           alignment: Alignment.bottomCenter,
           child: LottieBuilder.asset(
             "assetss/fire.json",
             width: screenWidth / 1.5,
-            height: screenlHeight / 3,
+            height: screenHeight / 3,
           ),
         ),
         SizedBox(
-          height: screenlHeight / 38,
+          height: screenHeight / 38,
           width: double.infinity,
         ),
         const Text("Welcome to the Pubby \n          for Youtube",
@@ -45,7 +45,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 fontFamily: "Javanese",
                 wordSpacing: 12)),
         SizedBox(
-          height: screenlHeight / 30,
+          height: screenHeight / 30,
         ),
         const Text("Have an account?",
             style: TextStyle(
@@ -55,7 +55,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 wordSpacing: 12)),
         LoginAndSignupButton(text: "Login", direction: LoginPage()),
         SizedBox(
-          height: screenlHeight / 200,
+          height: screenHeight / 200,
         ),
         Text(
           "or",
@@ -88,7 +88,7 @@ class LoginAndSignupButton extends StatelessWidget {
           ),
         ], borderRadius: BorderRadius.circular(22), color: Colors.white),
         width: screenWidth / 2.5,
-        height: screenlHeight / 12,
+        height: screenHeight / 12,
         child: Center(
           child: Text(
             text,

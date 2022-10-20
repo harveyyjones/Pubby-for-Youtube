@@ -27,7 +27,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: screenlHeight / 14,
+      height: screenHeight / 14,
       child: BottomNavigationBar(
           selectedItemColor: Colors.blue,
           selectedFontSize: 0,

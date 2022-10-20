@@ -1,16 +1,9 @@
 # pubby_for_youtube
+`19.10.2022 Çarşamba`
+İlk stepper kısmında girilen profil fotoğrafı, biyografi ve isim direkt database'e yazılıyor. Uygulamamnın kalan kısmında yine data'dan çekiliyor. Değiştirildiğinde yine önce data güncelleniyor. Realtime database olduğu için ekstra state management çözümüne gerek kalmamasını umuyorum.
 
-A new Flutter project.
 
-## Getting Started
+# Yapılması gerekenler `20.10.2022`
+Belli unique ID ile birlikte veri tabanına isim, e mail, profil fotosu verileriniz yazdırmam lazım. Stepper ksımında hepsini halledebilirim. Sonrasında ayarlar kısmında update etme işlemlerini yaparım.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Createuser() veya loginwithemailandpassword() gibi metodların döndüğü veriyi toMap() diyerek veritabanına gönderebiliyoruz. saveUser() metoduna o veriyi dönmemiz lazım. Ancak eklememiz gereken çeşitli veriler daha var (profil fotosu, biyografi vs.). Onları da ekleyerek tek bir değişkene koyup postlayacağız. 

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pubby_for_youtube/main.dart';
 
 import '../../UI Helpers/bottom_bar.dart';
+import '../../UI Helpers/constants.dart';
 
 class MessageScreen extends StatefulWidget {
   MessageScreen({
@@ -16,10 +17,13 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
+  String messageToDisplay =
+      ' \n you accept the Xogggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg';
   ScaffoldMessengerState snackBar = ScaffoldMessengerState();
 
   @override
   Widget build(BuildContext context) {
+    String _name = "Jack Mallon";
     return Scaffold(
         bottomNavigationBar: BottomBar(
           selectedIndex: 3,
@@ -29,77 +33,86 @@ class _MessageScreenState extends State<MessageScreen> {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: screenHeight / 55,
+                  ),
                   itemCount: 5,
                   itemBuilder: (context, index) => InkWell(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return MyApp();
-                      },
-                    )),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 9.h),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 18.w),
-                                  child: CircleAvatar(
-                                      maxRadius: 47,
-                                      minRadius: 20,
-                                      backgroundImage:
-                                          AssetImage("assetss/teacherman.jpg")),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 20.w, bottom: 12.h),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(right: 370.w),
-                                        //    color: Colors.amber,
-                                        child: Text("Ömer",
-                                            style: TextStyle(
-                                                fontSize: 30.sp,
-                                                fontFamily: "Calisto")),
-                                      ),
-                                      Container(
-                                        width: 540,
-                                        //  color: Colors.blue,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(top: 20.h),
-                                          child: const Text(
-                                            "With hope in your heart and you'll never walk alone ",
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontSize: 25,
-                                                color: Color.fromARGB(
-                                                    255, 117, 113, 113),
-                                                fontFamily: "Calisto"),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return MyApp();
+                            },
+                          )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade400,
+                                offset: Offset(1, 2),
+                                blurRadius: 1,
+                                blurStyle: BlurStyle.outer,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(22),
+                            color: Colors.white),
+                        width: screenWidth / 1.1,
+                        height: screenHeight / 7,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: screenWidth / 33,
                             ),
-                          ),
+                            CircleAvatar(
+                              maxRadius: screenWidth / 11,
+                              minRadius: 20,
+                              backgroundImage:
+                                  AssetImage("assetss/teacherman.jpg"),
+                            ),
+                            SizedBox(
+                              width: screenWidth / 32,
+                            ),
+                            Flexible(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: screenHeight / 55,
+                                  ),
+                                  Container(
+                                    width: screenWidth / 1.6,
+                                    height: screenHeight / 10,
+                                    // color: Color.fromARGB(255, 196, 19, 19),
+                                    child: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.start,
+                                      softWrap: true,
+                                      text: TextSpan(
+                                        text: '${_name}',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 33.sp,
+                                            fontFamily: fontFamilyJavanese),
+                                        children: [
+                                          TextSpan(
+                                            text: messageToDisplay.length >= 30
+                                                ? '${messageToDisplay.substring(0, 30)}...'
+                                                : messageToDisplay,
+                                            style: TextStyle(
+                                                color: Colors.grey.shade600,
+                                                fontSize: 24.sp,
+                                                fontFamily: "Javanese",
+                                                height: 1),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Divider(
-                          color: Colors.black.withOpacity(0.4),
-                        )
-                      ],
-                    ),
-                  ),
+                      )),
                 ),
               ),
             ],

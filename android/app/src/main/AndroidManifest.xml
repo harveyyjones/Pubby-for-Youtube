@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pubby_for_youtube">
    <application
+        android:usesCleartextTraffic="true"
         android:label="pubby_for_youtube"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

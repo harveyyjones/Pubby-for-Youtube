@@ -54,6 +54,7 @@ dependencies:
   event_bus: ^2.0.0
   image_cropper: ^3.0.0
   firebase_storage: ^10.3.11
+  cloud_firestore: ^3.5.1
 
 dev_dependencies:
   flutter_test:

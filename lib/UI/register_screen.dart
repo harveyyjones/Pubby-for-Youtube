@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
+import 'package:pubby_for_youtube/UI/home_screen.dart';
 import 'package:pubby_for_youtube/main.dart';
 
 import 'landing_screen.dart';
@@ -45,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           LandingScreen(),
           Positioned(
-            bottom: screenlHeight / 3.5,
+            bottom: screenHeight / 3.5,
             left: screenWidth / 10,
             child: Column(
               children: [
@@ -55,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                     child: Container(
                       width: size.width.w * 0.8,
-                      height: screenlHeight / 1.9,
+                      height: screenHeight / 1.9,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.white.withOpacity(0.1),
@@ -372,11 +373,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
       await user.reload();
       user = auth.currentUser;
-      callSnackbar("Kayıt başarılı !", Colors.green, () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MyApp(),
-        ));
-      });
+      callSnackbar("Kayıt başarılı !", Colors.green, () {});
+      Future.delayed(Duration(seconds: 1));
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-exists' ||
           e.code == 'email-already-in-use') {

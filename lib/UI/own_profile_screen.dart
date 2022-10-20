@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/Messages/message_box_screen.dart';
+import 'package:pubby_for_youtube/UI/admin_panel.dart';
 import 'package:pubby_for_youtube/UI/profile_settings_screen.dart';
 import 'package:pubby_for_youtube/main.dart';
 
@@ -26,12 +27,12 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
         height: double.infinity,
         color: Color(0xffeef3f8),
         // width: screenWidth,
-        // height: screenlHeight,
+        // height: screenHeight,
         child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(
-                height: screenlHeight / 10,
+                height: screenHeight / 7,
               ),
               Stack(
                 children: [
@@ -40,26 +41,28 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
                       minRadius: 20,
                       backgroundImage: AssetImage("assetss/teacherman.jpg")),
                   Positioned(
-                      bottom: screenlHeight / 220,
+                      bottom: screenHeight / 220,
                       right: screenWidth / 15,
                       child: InkWell(
-                        onTap: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfileSettings(),
-                        )),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  AdminPanel() //ProfileSettings(),
+                              ));
+                        },
                         child: Hero(
                           tag: "Profile Screen",
                           child: SvgPicture.asset(
                             "assetss/settings.svg",
                             width: screenWidth / 80,
-                            height: screenlHeight / 15,
+                            height: screenHeight / 15,
                           ),
                         ),
                       )),
                 ],
               ),
               SizedBox(
-                height: screenlHeight / 30,
+                height: screenHeight / 30,
               ),
 
               Text(
@@ -83,34 +86,34 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
                 ),
               ),
               SizedBox(
-                height: screenlHeight / 25,
+                height: screenHeight / 25,
               ),
-              InkWell(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MessageScreen(),
-                )),
-                child: Container(
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade300,
-                          offset: Offset(1, 2),
-                          blurRadius: 9,
-                          blurStyle: BlurStyle.inner,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(33),
-                      color: Colors.white),
-                  width: screenWidth / 2.5,
-                  height: screenlHeight / 12,
-                  child: Center(
-                    child: Text(
-                      text,
-                      style: TextStyle(fontSize: 36, fontFamily: "Javanese"),
-                    ),
-                  ),
-                ),
-              )
+              // InkWell(
+              //   onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => MessageScreen(),
+              //   )),
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //         boxShadow: [
+              //           BoxShadow(
+              //             color: Colors.grey.shade300,
+              //             offset: Offset(1, 2),
+              //             blurRadius: 9,
+              //             blurStyle: BlurStyle.inner,
+              //           ),
+              //         ],
+              //         borderRadius: BorderRadius.circular(33),
+              //         color: Colors.white),
+              //     width: screenWidth / 2.5,
+              //     height: screenHeight / 12,
+              //     child: Center(
+              //       child: Text(
+              //         text,
+              //         style: TextStyle(fontSize: 36, fontFamily: "Javanese"),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),

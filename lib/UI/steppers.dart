@@ -1,18 +1,20 @@
 import 'dart:io';
 
-import 'package:event_bus/event_bus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pubby_for_youtube/Business%20Logic/firestore_database_service.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/home_screen.dart';
-
 import '../UI Helpers/personal_info_name_bar.dart';
 
+final User? currentUser = FirebaseAuth.instance.currentUser;
 TextEditingController _controllerForName = TextEditingController();
 TextEditingController _controllerForBiography = TextEditingController();
+var profilePhoto;
 int _index = 0;
 
 class MyApp extends StatelessWidget {
@@ -38,37 +40,38 @@ class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({super.key});
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<MyStatefulWidget> createState() => MyStatefulWidgetState();
 }
 
+class MyStatefulWidgetState extends State<MyStatefulWidget> {
+  FirestoreDatabaseService _firestore_database_service =
+      FirestoreDatabaseService();
+  final ImagePicker _picker = ImagePicker();
 File? _image;
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  final ImagePicker _picker = ImagePicker();
+  Future<File?> cropImage(File imageFile) async {
+    CroppedFile? croppedImage =
+        await ImageCropper().cropImage(sourcePath: imageFile.path);
+    return File(croppedImage!.path);
+    print("Image File Path: ${imageFile.path}");
+  }
+
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      File? img = File(image.path);
+      img = (await cropImage(img));
+      setState(() {
+        _image = img;
+      });
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<File?> cropImage(File imageFile) async {
-      CroppedFile? croppedImage =
-          await ImageCropper().cropImage(sourcePath: imageFile.path);
-      return File(croppedImage!.path);
-      print("Image File Path: ${imageFile.path}");
-    }
-
-    Future pickImage(ImageSource source) async {
-      try {
-        final image = await ImagePicker().pickImage(source: source);
-        if (image == null) return;
-        File? img = File(image.path);
-        img = (await cropImage(img));
-        setState(() {
-          _image = img;
-        });
-      } on PlatformException catch (e) {
-        print(e.message);
-      }
-    }
-
     var _keyForStepper = GlobalKey();
     return SafeArea(
       child: Scaffold(
@@ -81,12 +84,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     ? Column(
                         children: [
                           SizedBox(
-                            height: screenlHeight / 20,
+                            height: screenHeight / 20,
                           ),
                           TextButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_controllerForName.text != "" &&
                                     _controllerForBiography.text != "") {
+                                  // Kullanıcının bilgilerinin ilk kez database'e yazdırılması işlemi burda gerçekleştiriliyor.
+                                  await _firestore_database_service.saveUser(
+                                      _controllerForBiography.text,
+                                      _image,
+                                      _controllerForName.text
+                                      
+                                      );
+                                  // ignore: use_build_context_synchronously
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
@@ -188,7 +199,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   state: _index > 2 ? StepState.complete : StepState.indexed,
                   title: const Text('Step 1 title'),
                   content: Container(
-                    padding: EdgeInsets.only(top: screenlHeight / 25),
+                    padding: EdgeInsets.only(top: screenHeight / 25),
                     alignment: Alignment.centerLeft,
                     child: Align(
                       alignment: Alignment.center,
@@ -202,7 +213,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             minRadius: 20,
                           ),
                           SizedBox(
-                            height: screenlHeight / 33,
+                            height: screenHeight / 33,
                           ),
                           const Text(
                             "Add a picture for your awesome profile!",
@@ -227,7 +238,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   borderRadius: BorderRadius.circular(22),
                                   color: Colors.white),
                               width: screenWidth / 2.5,
-                              height: screenlHeight / 12,
+                              height: screenHeight / 12,
                               child: const Center(
                                 child: Text(
                                   "Add Photo",
@@ -261,7 +272,7 @@ List<Step> get stepList => <Step>[
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: screenlHeight / 33,
+                  height: screenHeight / 33,
                 ),
                 PersonalInfoNameBar(
                   controller: _controllerForName,
