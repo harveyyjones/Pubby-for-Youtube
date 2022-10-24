@@ -56,7 +56,6 @@ class MyStatefulWidgetState extends State<MyStatefulWidget> {
     CroppedFile? croppedImage =
         await ImageCropper().cropImage(sourcePath: imageFile.path);
     return File(croppedImage!.path);
-    print("Image File Path: ${imageFile.path}");
   }
 
   Future pickImage(ImageSource source) async {

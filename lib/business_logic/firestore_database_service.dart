@@ -8,7 +8,7 @@ class FirestoreDatabaseService {
 
   UserModel _user = UserModel();
   late FirebaseFirestore _instance = FirebaseFirestore.instance;
-Future<UserModel> getUserData() async {
+  Future<UserModel> getUserData() async {
     DocumentSnapshot<Map<String, dynamic>> _okunanUser =
         await FirebaseFirestore.instance.doc("users/${currentUser!.uid}").get();
     Map<String, dynamic>? okunanUserbilgileriMap = _okunanUser.data();
@@ -17,12 +17,12 @@ Future<UserModel> getUserData() async {
     print(okunanUserBilgileriNesne.toString());
     return okunanUserBilgileriNesne;
   }
-// Burda strem için verileri çekiyoruz.
-   Stream<DocumentSnapshot<Map<String, dynamic>>> getProfileData() {
+
+// Burda stream için verileri çekiyoruz.
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getProfileData() {
     var ref = _instance.collection("users").doc(currentUser!.uid).snapshots();
     return ref;
   }
-
 
 // Burada ilk kez stepper widget'ından aldığımız verileri veritabanına yolluyoruz. Öncesinde modelden geçirip map'e dönüştürüyoruz.
   Future saveUer([String? biography, photoUrl, String? name]) async {
@@ -52,14 +52,32 @@ Future<UserModel> getUserData() async {
     print(okunanUserBilgileriNesne.toString());
   }
 
-
-updateProfilePhoto(String imageURL) async {
+  updateProfilePhoto(String imageURL) async {
     // DocumentSnapshot<Map<String, dynamic>> _okunanUser =
     collection.doc(currentUser!.uid).update({"profilePhotoURL": imageURL});
-    
-        print("--------------------------------------------");
+
+    print("--------------------------------------------");
   }
 
+  updateName(newName) {
+    _instance
+        .collection("users")
+        .doc(currentUser!.uid)
+        .update({"name": newName});
+  }
 
+  updateBiography(newBiography) {
+    _instance
+        .collection("users")
+        .doc(currentUser!.uid)
+        .update({"biography": newBiography});
+  }
+
+  getName() async {
+    String? name = "deafult";
+    await getProfileData().forEach((element) {
+      name = element.data()!["biography"];
+    });
+    return name.toString();
+  }
 }
-  

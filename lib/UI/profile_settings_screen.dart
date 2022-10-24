@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +8,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
-
-import '../UI Helpers/personal_info_name_bar.dart';
 import '../business_logic/firestore_database_service.dart';
 
 class ProfileSettings extends StatefulWidget {
@@ -22,9 +19,6 @@ class ProfileSettings extends StatefulWidget {
 
 FirestoreDatabaseService _databaseService = FirestoreDatabaseService();
 late FirebaseFirestore _instance = FirebaseFirestore.instance;
-TextEditingController nameController = TextEditingController(text: "Hailey");
-TextEditingController eMailController =
-    TextEditingController(text: "haileyelse@gmail.com");
 
 class _ProfileSettingsState extends State<ProfileSettings> {
   File? _image;
@@ -53,6 +47,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               .whenComplete(() => ref.getDownloadURL().then((value) {
                     downloadImageURL = value;
                     setState(() {});
+                    _databaseService.updateProfilePhoto(downloadImageURL!);
                   })));
           print("Profil fotosu URL'i ayarlardan : ${downloadImageURL}");
         }
@@ -66,7 +61,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
           setState(() {
             _image = img;
           });
-          _databaseService.updateProfilePhoto(downloadImageURL!);
 
           uploadImageToDatabase();
         }
@@ -80,6 +74,14 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         stream: _databaseService.getProfileData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            TextEditingController nameController =
+                TextEditingController(text: snapshot.data!["name"]);
+            nameController.selection = TextSelection.fromPosition(
+                TextPosition(offset: nameController.text.length));
+            TextEditingController biographyController =
+                TextEditingController(text: snapshot.data!["biography"]);
+            biographyController.selection = TextSelection.fromPosition(
+                TextPosition(offset: biographyController.text.length));
             return Container(
                 padding: EdgeInsets.only(top: screenHeight / 20),
                 decoration: const BoxDecoration(color: Color(0xffeef3f8)),
@@ -112,7 +114,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                   pickImage(ImageSource.gallery);
                                   //TODO: Image picker ile foto değiştirilebiliyor olacak. Muhtemelen localde saklanabilir.
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                     color: Color.fromARGB(255, 160, 201, 245),
                                     Icons.image_search)))
                       ],
@@ -135,6 +137,20 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 40.w, right: 15.w),
                               child: TextFormField(
+                                  validator: (value) {
+                                    if (value!.length < 1) {
+                                      _databaseService.updateBiography(value);
+                                    } else {
+                                      return "Too long!";
+                                    }
+                                  },
+                                  onChanged: (value) {
+                                    if (value.length < 15) {
+                                      _databaseService.updateName(value);
+                                    }
+                                  },
+                                  controller: nameController,
+                                  //  initialValue: snapshot.data!["name"],
                                   obscureText: false,
                                   style: TextStyle(
                                       height: 0.9,
@@ -175,6 +191,21 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 40.w, right: 15.w),
                               child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value!.length < 120) {
+                                      _databaseService.updateBiography(value);
+                                    } else {
+                                      return "Too long!";
+                                    }
+                                  },
+                                  onChanged: (value) {
+                                    if (value.length < 120) {
+                                      _databaseService.updateBiography(value);
+                                    }
+                                  },
+                                  controller: biographyController,
                                   obscureText: false,
                                   style: TextStyle(
                                       height: 0.9,
@@ -204,31 +235,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Container(
-                      width: 250.w,
-                      height: 70.h,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            onPrimary: Color.fromARGB(255, 182, 99, 174),
-                            primary: Colors.black,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32)),
-                            minimumSize: Size(230.w, 60.h)),
-                        onPressed: () {
-                          //TODO:
-                          _databaseService
-                              .updateProfilePhoto(downloadImageURL!);
-                        },
-                        child: Text("Submit",
-                            style: TextStyle(
-                              fontFamily: 'Calisto',
-                              fontSize: 23.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            )),
-                      ),
-                    ),
                   ],
                 ));
           } else {
@@ -238,4 +244,30 @@ class _ProfileSettingsState extends State<ProfileSettings> {
       ),
     );
   }
+}
+
+callSnackbar(
+  String error,
+  context, [
+  Color? color,
+  VoidCallback? onVisible,
+]) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    behavior: SnackBarBehavior.floating,
+    margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
+    //padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    backgroundColor: color ?? Colors.red,
+    duration: Duration(milliseconds: 5),
+    onVisible: onVisible,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+    ),
+    content: SizedBox(
+      width: 40.w,
+      height: 40.h,
+      child: Center(
+        child: Text(error, style: const TextStyle(color: Colors.white)),
+      ),
+    ),
+  ));
 }

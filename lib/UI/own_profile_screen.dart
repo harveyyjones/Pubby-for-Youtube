@@ -14,12 +14,16 @@ class OwnProfileScreen extends StatefulWidget {
   State<OwnProfileScreen> createState() => _OwnProfileScreenState();
 }
 
+
 class _OwnProfileScreenState extends State<OwnProfileScreen> {
   String get text => "Message";
+  FirestoreDatabaseService _serviceForSnapshot = FirestoreDatabaseService();
+
+  
+
 
   @override
   Widget build(BuildContext context) {
-    FirestoreDatabaseService _serviceForSnapshot = FirestoreDatabaseService();
     return Scaffold(
       bottomNavigationBar: BottomBar(selectedIndex: 2),
       body: StreamBuilder(
@@ -51,9 +55,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
                               child: InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProfileSettings() //ProfileSettings(),
-                                      ));
+                                      builder: (context) => ProfileSettings()));
                                 },
                                 child: Hero(
                                   tag: "Profile Screen",

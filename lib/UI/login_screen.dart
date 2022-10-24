@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pubby_for_youtube/UI/profile_settings_screen.dart';
 import 'package:pubby_for_youtube/UI/register_screen.dart';
 
 import '../UI Helpers/blur_screen_maker.dart';
@@ -25,7 +24,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final User? user = FirebaseAuth.instance.currentUser;
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController(text: "omer@gmail.com");
+  final emailController = TextEditingController(text: "angelshatner@gmail.com");
   final passwordController = TextEditingController(text: "1234567890");
 
   bool isVisible = false;

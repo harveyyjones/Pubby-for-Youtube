@@ -1,7 +1,5 @@
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
 
 import '../business_logic/firestore_database_service.dart';
@@ -16,6 +14,9 @@ class AdminPanel extends StatefulWidget {
 class _AdminPanelState extends State<AdminPanel> {
   FirestoreDatabaseService _firestoreDatabaseService =
       FirestoreDatabaseService();
+
+  late FirebaseFirestore _instance = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,10 +32,12 @@ class _AdminPanelState extends State<AdminPanel> {
                   child: Text("SaveData()")),
               ElevatedButton(
                   onPressed: () {
-                 
-                   
+                    _instance
+                        .collection("users")
+                        .doc(currentUser!.uid)
+                        .update({"name": "adnan"});
                   },
-                  child: Text("Get User Data")),
+                  child: Text("Change name")),
             ],
           ),
         ),
