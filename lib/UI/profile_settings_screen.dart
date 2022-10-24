@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pubby_for_youtube/Business%20Logic/firestore_database_service.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
 
@@ -17,13 +20,14 @@ class ProfileSettings extends StatefulWidget {
   State<ProfileSettings> createState() => _ProfileSettingsState();
 }
 
+FirestoreDatabaseService _databaseService = FirestoreDatabaseService();
+late FirebaseFirestore _instance = FirebaseFirestore.instance;
 TextEditingController nameController = TextEditingController(text: "Hailey");
 TextEditingController eMailController =
     TextEditingController(text: "haileyelse@gmail.com");
 
 class _ProfileSettingsState extends State<ProfileSettings> {
   File? _image;
-  var _selectedItem = "Intermediate";
   @override
   Widget build(BuildContext context) {
     Future<File?> cropImage(File imageFile) async {
@@ -36,13 +40,34 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
     Future pickImage(ImageSource source) async {
       try {
+        uploadImageToDatabase() async {
+          UploadTask? uploadTask;
+          Reference ref = FirebaseStorage.instance
+              .ref()
+              .child("users")
+              .child(currentUser!.uid)
+              .child("profil.jpg");
+
+          uploadTask = ref.putFile(_image!);
+          var uri = await (uploadTask
+              .whenComplete(() => ref.getDownloadURL().then((value) {
+                    downloadImageURL = value;
+                    setState(() {});
+                  })));
+          print("Profil fotosu URL'i ayarlardan : ${downloadImageURL}");
+        }
+
         final image = await ImagePicker().pickImage(source: source);
-        if (image == null) return;
-        File? img = File(image.path);
-        img = (await cropImage(img));
-        setState(() {
-          _image = img;
-        });
+        if (image == null) {
+          return;
+        } else {
+          File? img = File(image.path);
+          img = (await cropImage(img));
+          setState(() {
+            _image = img;
+          });
+          uploadImageToDatabase();
+        }
       } on PlatformException catch (e) {
         print(e.message);
       }
@@ -110,7 +135,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32)),
                       minimumSize: Size(230.w, 60.h)),
-                  onPressed: () {},
+                  onPressed: () {
+                    //TODO:
+                    _databaseService.updateProfilePhoto(downloadImageURL!);
+                  },
                   child: Text("Submit",
                       style: TextStyle(
                         fontFamily: 'Calisto',

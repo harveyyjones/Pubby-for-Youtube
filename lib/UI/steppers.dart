@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,11 +43,14 @@ class MyStatefulWidget extends StatefulWidget {
   State<MyStatefulWidget> createState() => MyStatefulWidgetState();
 }
 
-class MyStatefulWidgetState extends State<MyStatefulWidget> {
-  FirestoreDatabaseService _firestore_database_service =
-      FirestoreDatabaseService();
-  final ImagePicker _picker = ImagePicker();
+FirestoreDatabaseService _firestore_database_service =
+    FirestoreDatabaseService();
+String? downloadImageURL;
 File? _image;
+User? user;
+
+class MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final ImagePicker _picker = ImagePicker();
 
   Future<File?> cropImage(File imageFile) async {
     CroppedFile? croppedImage =
@@ -58,13 +61,34 @@ File? _image;
 
   Future pickImage(ImageSource source) async {
     try {
+      uploadImageToDatabase() async {
+        UploadTask? uploadTask;
+        Reference ref = FirebaseStorage.instance
+            .ref()
+            .child("users")
+            .child(currentUser!.uid)
+            .child("profil.jpg");
+
+        uploadTask = ref.putFile(_image!);
+        var uri = await (uploadTask
+            .whenComplete(() => ref.getDownloadURL().then((value) {
+                  downloadImageURL = value;
+                  setState(() {});
+                })));
+        print("Profil fotosu URL'i : ${downloadImageURL}");
+      }
+
       final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      File? img = File(image.path);
-      img = (await cropImage(img));
-      setState(() {
-        _image = img;
-      });
+      if (image == null) {
+        return;
+      } else {
+        File? img = File(image.path);
+        img = (await cropImage(img));
+        setState(() {
+          _image = img;
+        });
+        uploadImageToDatabase();
+      }
     } on PlatformException catch (e) {
       print(e.message);
     }
@@ -91,12 +115,12 @@ File? _image;
                                 if (_controllerForName.text != "" &&
                                     _controllerForBiography.text != "") {
                                   // Kullanıcının bilgilerinin ilk kez database'e yazdırılması işlemi burda gerçekleştiriliyor.
-                                  await _firestore_database_service.saveUser(
-                                      _controllerForBiography.text,
-                                      _image,
-                                      _controllerForName.text
-                                      
-                                      );
+                                  user = await _firestore_database_service
+                                      .saveUser(
+                                          _controllerForBiography.text,
+                                          downloadImageURL,
+                                          _controllerForName.text);
+
                                   // ignore: use_build_context_synchronously
                                   Navigator.pushAndRemoveUntil(
                                       context,
@@ -269,8 +293,18 @@ List<Step> get stepList => <Step>[
             // color: Colors.black,
             alignment: Alignment.center,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(35),
+                  child: Text(
+                    "To help you complete your profile you should answer some quick questions.",
+                    style: TextStyle(
+                        fontFamily: fontFamilyJavanese,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
                 SizedBox(
                   height: screenHeight / 33,
                 ),

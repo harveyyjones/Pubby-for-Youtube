@@ -307,18 +307,16 @@ class _LoginPageState extends State<LoginPage> {
           ),
           minimumSize: Size(double.infinity, 50)),
       onPressed: () async {
-        var user = await auth.signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
 
         print("isim: ${this.user!.displayName}");
         print("e mail : ${this.user!.email}");
         print("uid ${this.user!.uid}");
 
         try {
+        var user = await auth.signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
           // Geçici olarak bloke ettim. Over request hatası alıyordum yoksa.
-          if (await auth.signInWithEmailAndPassword(
-                  email: emailController.text,
-                  password: passwordController.text) !=
+          if (user !=
               null
               ) {
             Navigator.pushAndRemoveUntil(

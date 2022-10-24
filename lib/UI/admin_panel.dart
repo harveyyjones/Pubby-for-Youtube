@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pubby_for_youtube/Business%20Logic/firestore_database_service.dart';
+import 'package:pubby_for_youtube/UI/steppers.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({super.key});
@@ -24,8 +25,15 @@ class _AdminPanelState extends State<AdminPanel> {
               ElevatedButton(
                   onPressed: () {
                     _firestoreDatabaseService.saveUser();
+                    print(user!.displayName);
                   },
-                  child: Text("SaveData()"))
+                  child: Text("SaveData()")),
+              ElevatedButton(
+                  onPressed: () {
+                 
+                   
+                  },
+                  child: Text("Get User Data")),
             ],
           ),
         ),

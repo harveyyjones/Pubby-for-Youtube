@@ -7,10 +7,17 @@ class FirestoreDatabaseService {
 
   UserModel _user = UserModel();
   late FirebaseFirestore _instance = FirebaseFirestore.instance;
-  var collection = FirebaseFirestore.instance.collection('users');
-
+Future<UserModel> getUserData() async {
+    DocumentSnapshot<Map<String, dynamic>> _okunanUser =
+        await FirebaseFirestore.instance.doc("users/${currentUser!.uid}").get();
+    Map<String, dynamic>? okunanUserbilgileriMap = _okunanUser.data();
+    UserModel okunanUserBilgileriNesne =
+        UserModel.fromMap(okunanUserbilgileriMap!);
+    print(okunanUserBilgileriNesne.toString());
+    return okunanUserBilgileriNesne;
+  }
 // Burada ilk kez stepper widget'ından aldığımız verileri veritabanına yolluyoruz. Öncesinde modelden geçirip map'e dönüştürüyoruz.
-  Future saveUser([String? biography, photoUrl, String? name]) async {
+  Future saveUer([String? biography, photoUrl, String? name]) async {
     UserModel? _eklenecekUser = UserModel(
       biography: biography,
       eMail: currentUser?.email,
@@ -22,7 +29,7 @@ class FirestoreDatabaseService {
     print("Biyografi: ${_eklenecekUser.biography}");
     print("E Mail: ${_eklenecekUser.eMail}");
     print("Name: ${_eklenecekUser.name}");
-    print("Profile Photo URL: ${_eklenecekUser.profilePhotoURL}");
+    print("Profile Photo stuff: ${_eklenecekUser.profilePhotoURL}");
     print("*****************************");
     print(_eklenecekUser.toMap());
     await _instance
@@ -37,16 +44,6 @@ class FirestoreDatabaseService {
     print(okunanUserBilgileriNesne.toString());
   }
 
-// Veri gösterme fonksiyonu.
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getProfileData() {
-    var ref = _instance.collection("users").doc(currentUser!.uid).snapshots();
-    return ref;
-  }
 
-  updateProfilePhoto(String imageURL) async {
-    // DocumentSnapshot<Map<String, dynamic>> _okunanUser =
-    collection.doc(currentUser!.uid).update({"profilePhotoURL": imageURL});
-    
-        print("--------------------------------------------");
-  }
 }
+  

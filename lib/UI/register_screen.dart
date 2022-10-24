@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/home_screen.dart';
+import 'package:pubby_for_youtube/UI/steppers.dart';
 import 'package:pubby_for_youtube/main.dart';
 
 import 'landing_screen.dart';
@@ -376,16 +377,16 @@ class _RegisterPageState extends State<RegisterPage> {
       callSnackbar("Kayıt başarılı !", Colors.green, () {});
       Future.delayed(Duration(seconds: 1));
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => MyStatefulWidget(),
       ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-exists' ||
           e.code == 'email-already-in-use') {
         callSnackbar("Bu e-mail daha önce kullanılmış!");
-        return '';
+        return;
       } else if (e.code == 'phone-number-already-exists') {
         callSnackbar("Bu telefon numarası daha önce alınmış!");
-        return '';
+        return;
       }
     }
   }
