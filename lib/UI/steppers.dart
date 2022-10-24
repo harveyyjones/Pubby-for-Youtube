@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pubby_for_youtube/Business%20Logic/firestore_database_service.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/home_screen.dart';
 import '../UI Helpers/personal_info_name_bar.dart';
+import '../business_logic/firestore_database_service.dart';
 
 final User? currentUser = FirebaseAuth.instance.currentUser;
 TextEditingController _controllerForName = TextEditingController();
@@ -116,7 +116,7 @@ class MyStatefulWidgetState extends State<MyStatefulWidget> {
                                     _controllerForBiography.text != "") {
                                   // Kullanıcının bilgilerinin ilk kez database'e yazdırılması işlemi burda gerçekleştiriliyor.
                                   user = await _firestore_database_service
-                                      .saveUser(
+                                      .saveUer(
                                           _controllerForBiography.text,
                                           downloadImageURL,
                                           _controllerForName.text);

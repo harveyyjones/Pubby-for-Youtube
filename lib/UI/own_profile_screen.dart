@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pubby_for_youtube/Business%20Logic/firestore_database_service.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/profile_settings_screen.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
 import '../UI Helpers/bottom_bar.dart';
+import '../business_logic/firestore_database_service.dart';
 
 class OwnProfileScreen extends StatefulWidget {
   OwnProfileScreen({Key? key}) : super(key: key);

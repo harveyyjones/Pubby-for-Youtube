@@ -4,6 +4,7 @@ import 'package:pubby_for_youtube/business_logic/user_model.dart';
 
 class FirestoreDatabaseService {
   String deneme = "deneme";
+  var collection = FirebaseFirestore.instance.collection('users');
 
   UserModel _user = UserModel();
   late FirebaseFirestore _instance = FirebaseFirestore.instance;
@@ -16,6 +17,13 @@ Future<UserModel> getUserData() async {
     print(okunanUserBilgileriNesne.toString());
     return okunanUserBilgileriNesne;
   }
+// Burda strem için verileri çekiyoruz.
+   Stream<DocumentSnapshot<Map<String, dynamic>>> getProfileData() {
+    var ref = _instance.collection("users").doc(currentUser!.uid).snapshots();
+    return ref;
+  }
+
+
 // Burada ilk kez stepper widget'ından aldığımız verileri veritabanına yolluyoruz. Öncesinde modelden geçirip map'e dönüştürüyoruz.
   Future saveUer([String? biography, photoUrl, String? name]) async {
     UserModel? _eklenecekUser = UserModel(
@@ -42,6 +50,14 @@ Future<UserModel> getUserData() async {
     UserModel okunanUserBilgileriNesne =
         UserModel.fromMap(okunanUserbilgileriMap!);
     print(okunanUserBilgileriNesne.toString());
+  }
+
+
+updateProfilePhoto(String imageURL) async {
+    // DocumentSnapshot<Map<String, dynamic>> _okunanUser =
+    collection.doc(currentUser!.uid).update({"profilePhotoURL": imageURL});
+    
+        print("--------------------------------------------");
   }
 
 
