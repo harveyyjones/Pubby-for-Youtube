@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -18,7 +17,7 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Color(0xffeef3f8)
+      decoration: const BoxDecoration(color: Color.fromARGB(255, 237, 245, 254)
           // image: DecorationImage(
           //     image: AssetImage("assetss/clouds.jpg"), fit: BoxFit.fill)),
           ),
@@ -38,10 +37,10 @@ class _LandingScreenState extends State<LandingScreen> {
           height: screenHeight / 38,
           width: double.infinity,
         ),
-        const Text("Welcome to the Pubby \n          for Youtube",
+        Text("Welcome to the Pubby \n          for Youtube",
             style: TextStyle(
                 height: 1.7,
-                fontSize: 44,
+                fontSize: 44.sp,
                 fontFamily: "Javanese",
                 wordSpacing: 12)),
         SizedBox(
@@ -92,7 +91,7 @@ class LoginAndSignupButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(fontSize: 33, fontFamily: "Javanese"),
+            style: TextStyle(fontSize: 33.sp, fontFamily: "Javanese"),
           ),
         ),
       ),

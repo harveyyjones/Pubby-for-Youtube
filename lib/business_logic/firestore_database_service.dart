@@ -80,4 +80,14 @@ class FirestoreDatabaseService {
     });
     return name.toString();
   }
+
+  getAllUsersData() async {
+    QuerySnapshot<Map<String, dynamic>> _okunanUser =
+        await FirebaseFirestore.instance.collection("users").get();
+    for (var item in _okunanUser.docs) {
+      print("***************************");
+      print(item[
+          "name"]); // Dosya içerisine ulaşabilir veya döküman Id'sini çekebilirsiniz.
+    }
+  }
 }

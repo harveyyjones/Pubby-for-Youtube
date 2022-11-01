@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 
 import '../UI Helpers/bottom_bar.dart';
@@ -17,7 +18,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     return Scaffold(
       bottomNavigationBar: BottomBar(selectedIndex: 1),
       body: Container(
-        color: Color(0xffeef3f8),
+        color: Color.fromARGB(255, 234, 243, 252),
         child: Column(children: [
           SizedBox(
             width: double.infinity,
@@ -45,7 +46,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             "Eşleşmelerin!",
                             style: TextStyle(
                                 fontFamily: fontFamilyCambria,
-                                fontSize: 70,
+                                fontSize: 70.sp,
                                 fontWeight: FontWeight.w300),
                           ),
                           SizedBox(
@@ -106,11 +107,11 @@ class _CardsFornyificationsState extends State<CardsForNotifications> {
                 width: screenWidth / 1.6,
                 height: screenHeight / 10,
                 color: Colors.white,
-                child: const Text(
+                child: Text(
                   softWrap: true,
                   "Jack Mallon ile aynı anda \"Azer bülbül - sigarayı bıraktım\" dinlediniz",
                   style: TextStyle(
-                      fontSize: 33, fontFamily: "Javanese", height: 1.2),
+                      fontSize: 33.sp, fontFamily: "Javanese", height: 1.2),
                 ),
               ),
             ],

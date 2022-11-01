@@ -110,11 +110,11 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 16.h),
             _buildSignInButton(context),
             SizedBox(
-              height: 48,
+              height: screenHeight / 30,
             ),
             _buildDivider(),
             SizedBox(
-              height: 48,
+              height: screenHeight / 30,
             ),
             Center(
               child: Row(
@@ -123,27 +123,27 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   // iconlarin basladigi yer
 
-                  SignInSocial.buildSocial(
-                      context,
-                      const FaIcon(
-                        FontAwesomeIcons.apple,
-                        color: Colors.black,
-                      )),
-                  SizedBox(width: 16.w),
-                  SignInSocial.buildSocial(
-                      context,
-                      const FaIcon(
-                        FontAwesomeIcons.google,
-                        color: Colors.black,
-                      )),
+                  // SignInSocial.buildSocial(
+                  //     context,
+                  //     const FaIcon(
+                  //       FontAwesomeIcons.apple,
+                  //       color: Colors.black,
+                  //     )),
+                  // SizedBox(width: 16.w),
+                  // SignInSocial.buildSocial(
+                  //     context,
+                  //     const FaIcon(
+                  //       FontAwesomeIcons.google,
+                  //       color: Colors.black,
+                  //     )),
                 ],
               ),
             ),
             SizedBox(
-              height: 90,
+              height: screenHeight / 99,
             ),
             _buildForgotPassword(context),
-            SizedBox(height: 16.h),
+            SizedBox(height: screenHeight / 99),
             buildNoAccount(context)
           ],
         ),
@@ -256,10 +256,10 @@ class _LoginPageState extends State<LoginPage> {
 
   GestureDetector _buildForgotPassword(BuildContext context) {
     return GestureDetector(
-        child: const Text(
+        child: Text(
           "Forgot Password?",
           style: TextStyle(
-              fontSize: 23,
+              fontSize: 23.sp,
               decoration: TextDecoration.underline,
               color: Colors.black54),
         ),
@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
   RichText buildNoAccount(BuildContext context) {
     return RichText(
         text: TextSpan(
-            style: const TextStyle(color: Colors.black54, fontSize: 24),
+            style: TextStyle(color: Colors.black54, fontSize: 24.sp),
             text: "No Account? ",
             children: [
           TextSpan(
@@ -306,18 +306,14 @@ class _LoginPageState extends State<LoginPage> {
           ),
           minimumSize: Size(double.infinity, 50)),
       onPressed: () async {
-
-        print("isim: ${this.user!.displayName}");
-        print("e mail : ${this.user!.email}");
-        print("uid ${this.user!.uid}");
+        // print("e mail : ${this.user!.email}");
+        // print("uid ${this.user!.uid}");
 
         try {
-        var user = await auth.signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
+          var user = await auth.signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
           // Geçici olarak bloke ettim. Over request hatası alıyordum yoksa.
-          if (user !=
-              null
-              ) {
+          if (user != null) {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(

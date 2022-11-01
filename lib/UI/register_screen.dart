@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pubby_for_youtube/UI%20Helpers/blur_screen_maker.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
-import 'package:pubby_for_youtube/UI/home_screen.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
-import 'package:pubby_for_youtube/main.dart';
-
 import 'landing_screen.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -24,7 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   final phoneNumberController = TextEditingController();
-
   bool isVisible = false;
 
   @override
@@ -43,36 +40,18 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       //resizeToAvoidBottomInset: false,
       body: Stack(
-        fit: StackFit.expand,
         children: [
           LandingScreen(),
+          BlueScreenMaker(
+              xAxis: 15.0,
+              yAxis: 15.0,
+              height: screenHeight,
+              width: screenWidth,
+              child: SizedBox()),
           Positioned(
-            bottom: screenHeight / 3.5,
-            left: screenWidth / 10,
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                    child: Container(
-                      width: size.width.w * 0.8,
-                      height: screenHeight / 1.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white.withOpacity(0.1),
-                        border: Border.all(
-                          color: Colors.white24,
-                          width: 2.w,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: _buildForm(context),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            bottom: screenHeight / 3,
+            right: screenWidth / 4.3,
+            child: _buildForm(context),
           ),
         ],
       ),
@@ -88,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(
-            height: 67,
+            height: screenHeight / 33,
           ),
           Text("Sign Up",
               style: GoogleFonts.poppins(
@@ -121,8 +100,8 @@ class _RegisterPageState extends State<RegisterPage> {
 // isim alanı
   Widget _buildname() {
     return Container(
-      width: 300,
-      height: 70,
+      width: screenWidth / 1.7,
+      height: screenWidth / 9,
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -167,8 +146,8 @@ class _RegisterPageState extends State<RegisterPage> {
 // e-mail alanı
   Widget _buildEmailField() {
     return Container(
-      width: 300,
-      height: 70,
+      width: screenWidth / 1.7,
+      height: screenWidth / 9,
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -207,8 +186,8 @@ class _RegisterPageState extends State<RegisterPage> {
 // şifre alanı
   Widget _buildPasswordField() {
     return Container(
-      width: 300,
-      height: 70,
+      width: screenWidth / 1.7,
+      height: screenWidth / 9,
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -241,16 +220,6 @@ class _RegisterPageState extends State<RegisterPage> {
               }
               return null;
             },
-            /*validator: (value) {
-              if (value!.isEmpty) {
-                callSnackbar('Şifre alanı boş olamaz!');
-              } else if (value.length < 6) {
-                callSnackbar('Şifreniz minimum 6 haneli olmalıdır!');
-              } else if (value != passwordController_again.text) {
-                callSnackbar("Şifreler aynı değil!");
-              }
-              return null;
-            },*/
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -277,8 +246,8 @@ class _RegisterPageState extends State<RegisterPage> {
 // numara alanı
   Widget _buildphoneNumber() {
     return Container(
-      width: 300,
-      height: 70,
+      width: screenWidth / 1.7,
+      height: screenWidth / 9,
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -315,27 +284,32 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
 // kayıt ol butonu
-  ElevatedButton _buildRegisterInButton(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          onPrimary: Colors.black,
-          primary: Colors.black,
-          elevation: 5,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-          minimumSize: const Size(double.infinity, 50)),
-      onPressed: () async {
-        if (formKey.currentState!.validate()) {
-          print(true);
-          await signUp();
-        }
-      },
-      child: Text("Sign Up",
-          style: GoogleFonts.poppins(
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
-          )),
+  _buildRegisterInButton(BuildContext context) {
+    return Container(
+      width: screenWidth / 2,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.black,
+            primary: Colors.black,
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+            minimumSize: const Size(double.infinity, 50)),
+        onPressed: () async {
+          print(formKey.currentContext!.size!.width);
+
+          if (formKey.currentState!.validate()) {
+            print(true);
+            await signUp();
+          }
+        },
+        child: Text("Sign Up",
+            style: GoogleFonts.poppins(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+            )),
+      ),
     );
   }
 

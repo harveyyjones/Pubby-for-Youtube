@@ -84,9 +84,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 TextPosition(offset: biographyController.text.length));
             return Container(
                 padding: EdgeInsets.only(top: screenHeight / 20),
-                decoration: const BoxDecoration(color: Color(0xffeef3f8)),
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 228, 240, 252)),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
                       height: screenHeight / 10,
@@ -94,12 +95,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     Stack(
                       children: [
                         Container(
-                          color: Color.fromARGB(0, 176, 11, 11),
+                          //   color: Color.fromARGB(255, 176, 11, 11),
                           width: screenWidth / 2,
                           child: Hero(
                             tag: "Profile Screen",
                             child: CircleAvatar(
-                                maxRadius: 180,
+                                maxRadius: screenWidth / 3.7,
                                 minRadius: 55,
                                 backgroundImage: NetworkImage(
                                     snapshot.data!["profilePhotoURL"] ?? "")),
@@ -112,7 +113,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                 iconSize: 75,
                                 onPressed: () {
                                   pickImage(ImageSource.gallery);
-                                  //TODO: Image picker ile foto değiştirilebiliyor olacak. Muhtemelen localde saklanabilir.
                                 },
                                 icon: const Icon(
                                     color: Color.fromARGB(255, 160, 201, 245),
@@ -120,15 +120,15 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       ],
                     ),
                     SizedBox(
-                      height: screenHeight / 33,
+                      height: screenHeight / 55,
                       width: MediaQuery.of(context).size.width,
                     ),
                     Column(
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width - 160.w,
-                          height: 100,
-                          color: Colors.transparent,
+                          height: screenHeight / 11,
+                          //  color: Color.fromARGB(255, 194, 6, 6),
                           child: Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -173,7 +173,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: screenHeight / 66,
                         )
                       ],
                     ),
@@ -181,7 +181,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width - 160.w,
-                          height: 200,
+                          height: screenHeight / 5,
                           color: Colors.transparent,
                           child: Card(
                             elevation: 5,
@@ -227,13 +227,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 40,
-                        )
                       ],
                     ),
-                    const SizedBox(
-                      height: 30,
+                    Expanded(
+                      child: const SizedBox(),
                     ),
                   ],
                 ));

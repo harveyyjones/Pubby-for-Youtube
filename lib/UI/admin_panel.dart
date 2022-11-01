@@ -38,6 +38,13 @@ class _AdminPanelState extends State<AdminPanel> {
                         .update({"name": "adnan"});
                   },
                   child: Text("Change name")),
+              ElevatedButton(
+                  onPressed: () {
+                    print("*****************************************");
+                    print(_firestoreDatabaseService.getAllUsersData());
+                    
+                  },
+                  child: Text("Tüm kullanıcı adlarını listele")),
             ],
           ),
         ),

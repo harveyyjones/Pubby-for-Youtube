@@ -14,13 +14,9 @@ class OwnProfileScreen extends StatefulWidget {
   State<OwnProfileScreen> createState() => _OwnProfileScreenState();
 }
 
-
 class _OwnProfileScreenState extends State<OwnProfileScreen> {
   String get text => "Message";
   FirestoreDatabaseService _serviceForSnapshot = FirestoreDatabaseService();
-
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +29,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen> {
               return Container(
                 width: double.infinity,
                 height: double.infinity,
-                color: Color(0xffeef3f8),
+                color: Color.fromARGB(255, 227, 239, 252),
                 // width: screenWidth,
                 // height: screenHeight,
                 child: SingleChildScrollView(

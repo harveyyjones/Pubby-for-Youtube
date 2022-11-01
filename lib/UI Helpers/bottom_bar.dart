@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/Messages/message_box_screen.dart';
-import 'package:pubby_for_youtube/UI/admin_panel.dart';
+import 'package:pubby_for_youtube/UI/deneme.dart';
 import 'package:pubby_for_youtube/UI/own_profile_screen.dart';
-import 'package:pubby_for_youtube/UI/steppers.dart';
-
 import '../UI/home_screen.dart';
 import '../UI/notifications_screen.dart';
 
@@ -19,8 +18,8 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   var _index = 0;
-  List _pagesToNavigateTo = [
-    AdminPanel(), // HomeScreen(),
+  final List  _pagesToNavigateTo =  [
+    HomeScreen(),
     NotificationsScreen(),
     OwnProfileScreen(),
     MessageScreen()
@@ -43,48 +42,48 @@ class _BottomBarState extends State<BottomBar> {
                 (route) => false);
             setState(() {});
           },
-          items: const [
+          items: [
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.home,
-                  size: 60,
+                  size: 60.sp,
                 ),
                 label: "Home",
                 icon: Icon(
-                  size: 50,
+                  size: 50.sp,
                   Icons.home,
                   color: Colors.black,
                 )),
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.notifications_none_outlined,
-                  size: 60,
+                  size: 60.sp,
                 ),
                 label: "Notifications",
                 icon: Icon(
-                  size: 50,
+                  size: 50.sp,
                   Icons.notifications_none_outlined,
                   color: Colors.black,
                 )),
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.person,
-                  size: 60,
+                  size: 60.sp,
                 ),
                 label: "Profile",
                 icon: Icon(
-                  size: 50,
+                  size: 50.sp,
                   Icons.person,
                   color: Colors.black,
                 )),
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.message,
-                  size: 60,
+                  size: 60.sp,
                 ),
                 label: "Profile",
                 icon: Icon(
-                  size: 50,
+                  size: 50.sp,
                   Icons.message,
                   color: Colors.black,
                 )),
