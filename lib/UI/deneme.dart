@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pubby_for_youtube/UI%20Helpers/bottom_bar.dart';
 import 'package:pubby_for_youtube/main.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -108,6 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("*****************************");
+    print(_controller.value.playerState);
     return YoutubePlayerBuilder(
       onExitFullScreen: () {
         // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
@@ -151,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
       builder: (context, player) => Scaffold(
+        bottomNavigationBar: BottomBar(selectedIndex: 2),
         appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.only(left: 12.0),

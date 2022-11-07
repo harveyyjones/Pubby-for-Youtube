@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pubby_for_youtube/UI%20Helpers/constants.dart';
 import 'package:pubby_for_youtube/UI/Messages/message_box_screen.dart';
+import 'package:pubby_for_youtube/UI/admin_panel.dart';
 import 'package:pubby_for_youtube/UI/deneme.dart';
 import 'package:pubby_for_youtube/UI/own_profile_screen.dart';
+import 'package:pubby_for_youtube/UI/video_playing_screen.dart';
 import '../UI/home_screen.dart';
 import '../UI/notifications_screen.dart';
 
@@ -18,9 +20,10 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   var _index = 0;
-  final List  _pagesToNavigateTo =  [
+  final List _pagesToNavigateTo = [
     HomeScreen(),
     NotificationsScreen(),
+    // AdminPanel(),
     OwnProfileScreen(),
     MessageScreen()
   ];

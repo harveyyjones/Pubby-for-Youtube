@@ -8,6 +8,7 @@ class UserModel {
   String? profilePhotoURL; // Bunun veri tipini değiştirebilirim duruma göre.
   var updatedAt;
   String? biography;
+  String? gender;
 
   UserModel({
     this.userId,
@@ -15,6 +16,7 @@ class UserModel {
     this.eMail,
     this.profilePhotoURL,
     this.biography,
+    var this.gender,
     var this.createdAt,
     var this.updatedAt,
   });
@@ -38,6 +40,6 @@ class UserModel {
         name = map["name"],
         profilePhotoURL = map["profilePhotoURL"],
         biography = map["biography"],
-        createdAt = (map["createdAt"] ),
-        updatedAt = (map["updatedAt"] );
+        createdAt = (map["createdAt"]),
+        updatedAt = (map["updatedAt"]);
 }

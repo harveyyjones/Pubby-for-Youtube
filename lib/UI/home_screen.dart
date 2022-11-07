@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print("İnitstate() tetiklendi");
     _notifier = ValueNotifier(thingToSearch);
     super.initState();
-   // callAPI(this.query);
+    callAPI("emienm");
     print('hello');
   }
 
@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              
               // method to show the search bar
               showSearch(
                   context: context,
@@ -185,6 +186,7 @@ class CustomSearchDelegate extends SearchDelegate {
             _notifier.value = query;
             _HomeScreenState(query);
             _homeScreenState.callAPI(query);
+            Navigator.of(context).pop();
           },
           icon: Icon(Icons.search))
     ];

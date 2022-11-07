@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pubby_for_youtube/UI%20Helpers/bottom_bar.dart';
 import 'package:pubby_for_youtube/UI/steppers.dart';
 
 import '../business_logic/firestore_database_service.dart';
@@ -21,15 +22,16 @@ class _AdminPanelState extends State<AdminPanel> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: BottomBar(selectedIndex: 2),
         body: Center(
           child: Column(
             children: [
               ElevatedButton(
                   onPressed: () {
-                    _firestoreDatabaseService.saveUer();
+                    _firestoreDatabaseService.getAllUsersData();
                     print(user!.displayName);
                   },
-                  child: Text("SaveData()")),
+                  child: Text("GetAllUsersData")),
               ElevatedButton(
                   onPressed: () {
                     _instance
@@ -40,11 +42,14 @@ class _AdminPanelState extends State<AdminPanel> {
                   child: Text("Change name")),
               ElevatedButton(
                   onPressed: () {
-                    print("*****************************************");
-                    print(_firestoreDatabaseService.getAllUsersData());
-                    
+                    _firestoreDatabaseService.getMatchesIds();
                   },
-                  child: Text("Tüm kullanıcı adlarını listele")),
+                  child: Text("Eşleşilen")),
+              ElevatedButton(
+                  onPressed: () {
+                    _firestoreDatabaseService.getUserDataViaUId();
+                  },
+                  child: Text("GetUserDataViaUId();")),
             ],
           ),
         ),
