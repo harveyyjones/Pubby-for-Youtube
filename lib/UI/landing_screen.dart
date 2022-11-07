@@ -46,10 +46,10 @@ class _LandingScreenState extends State<LandingScreen> {
         SizedBox(
           height: screenHeight / 30,
         ),
-        const Text("Have an account?",
+        Text("Have an account?",
             style: TextStyle(
                 height: 1.7,
-                fontSize: 35,
+                fontSize: 35.sp,
                 fontFamily: "Javanese",
                 wordSpacing: 12)),
         LoginAndSignupButton(text: "Login", direction: LoginPage()),

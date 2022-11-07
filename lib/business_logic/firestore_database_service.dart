@@ -68,7 +68,7 @@ class FirestoreDatabaseService {
   }
 
   updateIsUserListening(state, url) async {
-    // Buradan anlık olarak müzik dinlenip dinlenmediğini, dinleniyorsa url'sini çekiyorum.
+    // Buradan anlık olarak müzik dinlenip dinlenmediğini, dinleniyorsa url'sini ve başlığını çekiyorum.
     await _instance
         .collection("users")
         .doc(currentUser!.uid)
@@ -102,7 +102,8 @@ class FirestoreDatabaseService {
     }
   }
 
-  getUserDatasToMatch(currentlyListeningMusicUrl, amIListeningNow) async {
+  getUserDatasToMatch(
+      currentlyListeningMusicUrl, amIListeningNow, title) async {
     // Anlık olarak sürekli olarak o anda eşleşilen kişinin bilgilerini kullanıma hazır tutuyor.
     QuerySnapshot<Map<String, dynamic>> _okunanUser =
         await FirebaseFirestore.instance.collection("users").get();
@@ -110,23 +111,24 @@ class FirestoreDatabaseService {
       if (item["isUserListening"] &&
           currentlyListeningMusicUrl == item["currentlyListeningMusicUrl"] &&
           amIListeningNow) {
-        sendMatchesToDatabase(item["uid"], currentlyListeningMusicUrl);
+        sendMatchesToDatabase(item["uid"], currentlyListeningMusicUrl, title);
         print(" Eşleşilen kişi: ${item["name"]}");
         print(" Eşleşilen kişinin uid: ${item["uid"]}");
       }
     }
   }
 
-  sendMatchesToDatabase(uid, musicUrl) async {
+  sendMatchesToDatabase(uid, musicUrl, title) async {
     // Veritabına daha sonradan notifcation sayfasında kullanılmak üzere uid'leri, zamanı ve hangi şarkıyı dinlerken eşleşildiğini gönderir.
-    //Böylece eşleşme gerçekleştiği anda aynı yerden veriyi çekerek ekranda gösterilebilir. 30 dakika sonra kaybolur.
+    //Böylece eşleşme gerçekleştiği anda aynı yerden veriyi çekerek ekranda gösterilebilir.
     final previousMatchesRef =
         _instance.doc("previousMatches/${currentUser!.uid}");
-    previousMatchesRef
-        .collection("previousMatchesList")
-        .doc(uid)
-        .set({"uid": uid, "timeStamp": DateTime.now(), "url": musicUrl}).then(
-            (value) => print("İşlem başarılı"));
+    previousMatchesRef.collection("previousMatchesList").doc(uid).set({
+      "uid": uid,
+      "timeStamp": DateTime.now(),
+      "url": musicUrl,
+      "titleOfTheSong": title
+    }).then((value) => print("İşlem başarılı"));
   }
 
   getMatchesIds() async {
@@ -174,13 +176,14 @@ class FirestoreDatabaseService {
         .collection("previousMatches")
         .doc(currentUser!.uid)
         .collection("previousMatchesList")
+        .orderBy("timeStamp", descending: false)
         .get();
     for (var item in previousMatchesRef.docs) {
       print(item["uid"]);
-      tumEslesmelerinParcalari.add(item["nameOfTheSong"]);
+      tumEslesmelerinParcalari.add(item["titleOfTheSong"]);
       print(
           "Tüm eşleşmelerin olduğu kişilerin Şarkıları: ${tumEslesmelerinParcalari}");
     }
-      return await tumEslesmelerinParcalari;
+    return tumEslesmelerinParcalari;
   }
 }

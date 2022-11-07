@@ -53,6 +53,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         height: screenHeight / 45,
                       ),
                       itemCount: snapshot.data.length + 1,
+                      
                       itemBuilder: (BuildContext context, int index) {
                         return index == 0
                             ? Column(
@@ -115,6 +116,7 @@ class _CardsFornyificationsState extends State<CardsForNotifications> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+
       future: _firestoreDatabaseService.getTheMutualSongViaUId(),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -155,7 +157,7 @@ class _CardsFornyificationsState extends State<CardsForNotifications> {
                         "${widget.name} ile aynı anda  \"${snapshot.data![widget.index].toString()}\" dinlediniz",
                         style: TextStyle(
                             fontSize: 33.sp,
-                            fontFamily: "Javanese",
+                            fontFamily: fontFamilyCambria,
                             height: 1.2),
                       ),
                     ),

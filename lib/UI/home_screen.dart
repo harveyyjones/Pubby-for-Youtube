@@ -14,7 +14,7 @@ String? thingToSearch = "";
 late ValueNotifier _notifier;
 
 class _HomeScreenState extends State<HomeScreen> {
-  _HomeScreenState([this.query = "dualipa"]);
+  _HomeScreenState([this.query]);
   String? query;
   static String key = "AIzaSyC-aR0Fc2Xt-upNb1X6bEIxPdvAq_ug1EI";
 
@@ -27,12 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> callAPI(query) async {
     print("CallApi() metodu tetiklendi.");
-    // String query = "";
-    videoResult = await youtube.search(query,
-        order: 'relevance',
-        videoDuration: 'any',
-        regionCode: "TR",
-        type: "video");
+
+    videoResult = await youtube.search(
+      query,
+      order: 'relevance',
+      videoDuration: 'any',
+      regionCode: "US",
+      type: "video",
+    );
     videoResult = await youtube.nextPage();
     if (mounted) {
       setState(() {});
@@ -44,8 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print("İnitstate() tetiklendi");
     _notifier = ValueNotifier(thingToSearch);
     super.initState();
-    callAPI("emienm");
-    print('hello');
+    callAPI("Acoustic covers");
+    print('API Çağırıldı');
   }
 
   @override
@@ -63,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              
               // method to show the search bar
               showSearch(
                   context: context,
@@ -91,7 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => VideoPlayingScreen(videoUrl: video.url),
+          builder: (context) =>
+              VideoPlayingScreen(videoUrl: video.url, title: video.title),
         ));
       },
       child: Card(
@@ -223,8 +225,6 @@ class CustomSearchDelegate extends SearchDelegate {
     );
   }
 
-// last overwrite to show the
-// querying process at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
     List<String> matchQuery = [];
