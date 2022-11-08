@@ -110,7 +110,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                             right: screenWidth / 25,
                             top: screenHeight / 5,
                             child: IconButton(
-                                iconSize: 75,
+                                iconSize: 75.sp,
                                 onPressed: () {
                                   pickImage(ImageSource.gallery);
                                 },

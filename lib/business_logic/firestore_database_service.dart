@@ -158,10 +158,10 @@ class FirestoreDatabaseService {
     for (var item in await _okunanUser.docs) {
       if (await eslesilenlerinIdleri.contains(item["uid"])) {
         users = UserModel(
-          name: item["name"],
-          biography: item["biography"],
-          profilePhotoURL: item["profilePhotoURL"],
-        );
+            name: item["name"],
+            biography: item["biography"],
+            profilePhotoURL: item["profilePhotoURL"],
+            userId: item["uid"]);
         usersList.add(users);
         return usersList;
       }
